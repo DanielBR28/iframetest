@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Turing Machine and Halting Problem — SignalShore</title>
+	<meta name="description" content="Title: Turing Machine and Halting Problem; Date: 2018-08-30; Author: Sohom">
+	<meta name="author" content="Sohom">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://signalshore.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://signalshore.github.io/theme/css/ipython.css" rel="stylesheet">
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://signalshore.github.io/">SignalShore</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Turing Machine and Halting Problem</h1>
+		<time datetime="2018-08-30T00:00:00+05:30" itemprop="datePublished">Thu 30 August 2018</time>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			[<a href="https://signalshore.github.io/tag/cs.html" rel="tag">CS</a>]
+		</span>
+		
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>In a <a href="https://signalshore.github.io/blog/Lambda-Calculus-Part-2.html">previous
+post</a>
+I talked briefly about Alan Turing's model of computation, called the
+Turing Machine.</p>
+<p>Today we will look into this in more detail and discuss an interesting
+problem called the Halting problem.</p>
+<h2>Context</h2>
+<p>Alan Turing was interested in what it meant to <em>compute</em> something. 
+To fully grasp the severity of this problem we need to step back in time. </p>
+<p>This is the 1930s that we are talking about, there were no <em>proper</em>
+computers yet. Computers and the whole computer science field was not
+yet born. So in this context a computer was something (or someone)
+that could perform arithmetic operations. Humans who did this were
+called <a href="https://en.wikipedia.org/wiki/Human_computer">human computers</a>
+There were
+mechanical
+<a href="https://en.wikipedia.org/wiki/Mechanical_calculator">calculators</a>
+that existed back then but again, they all required a human operator.</p>
+<p>So ultimately it was the operator who was responsible for making
+decisions about what to do with the numbers. There was not automated
+reasoning that any machine could follow.</p>
+<p>What Alan Turing was interested in; was to understand the meaning of
+what it means for a task to be computable. This is one of the core
+areas in Philosophy of Computer Science. However to answer this
+question he needed a a formal definition of computation itself (which
+did not exist at that time). </p>
+<blockquote>
+<p><strong>NOTE :</strong> <em>As a mental exercise before doing anything else just sit back and
+think about this yourself. We use computers daily but at its very
+core, what does computation mean ?</em></p>
+</blockquote>
+<p>So in order to have a formal definition of computation we needed a
+model for computation. This is what Alan Turing came up with and this
+is what we now call the Turing Machine.</p>
+<h2>The Idea</h2>
+<p>Picture a typewriter.  The Turing Machine is heavily inspired by this
+system (typewriter + operator). In the book "Alan Turing: The Enigma"
+the writer Andrew Hodges tells us that Alan was fascinated by
+typewriters. We can see this inspiring his work.</p>
+<p>What does a typewriter have ? A typewriter has a paper for printing, a
+system that outputs characters on said paper, a mechanism for input
+that tells the typewriter what to print.  Additionally the typewriter
+system also has the user whose job is to tell the typewrite what to do
+and it keeps track of what the typewriter has already done.</p>
+<p>Now, the Turing Machine is a hypothetical machine (or more precisely a
+mathematical model); it does not exist in real life. It is a state
+machine which means that the machine has a finite number of states in
+which it can be. It can read information/instructions from a tape and
+based on that it moves from one state to another. The number of states
+is finite. It can also write data on the tape.</p>
+<p>A Turing Machine has 4 main parts:</p>
+<ul>
+<li>The tape</li>
+<li>The head</li>
+<li>The state</li>
+<li>The transition table</li>
+</ul>
+<p>The <strong>tape</strong> is the memory of the machine. The tape is divided into
+blocks of the same width and only one symbol is present in one
+block. The machine can read symbols from this tape and can write
+symbols to this tape. At a given time there is only one symbol in the
+machine. This symbol is referred to as the <em>scanned</em> symbol. The
+machine can be supplied with an infinitely long tape.</p>
+<p>The <strong>head</strong> is a contraption that can read symbols from the tape and can
+write symbols to the tape as well. The head can also move the tape to
+the left or right but by only one block at a time.</p>
+<p>The <strong>state</strong> of the Turing Machine. This state is a intriguing
+concept. This <em>state</em> is used to replace the <em>state of mind</em> of the
+typewriter operator (or any person performing any computation for that
+matter). At any time the Turing Machine can be one of many finite
+states.</p>
+<p>The <strong>transition table</strong> is a set of finite rules that given the current
+state the machine is currently and the scanned symbol tells the Turing
+Machine to write a symbol into the tape, then move the tape left or
+right and finally to assume a new state (or stay in the same one).</p>
+<p>Now the Turing Machine is a model of computation, thus it must be
+able to do some computation; right? So how does it do that. </p>
+<h2>Problems for a Turing Machine.</h2>
+<p>Problems in Automata Theory are generally of the form that involves
+some "computer" determining if some string belongs to a set of strings
+or not, based on some rules. This set of strings is called that follow
+a general rule for membership is called a Language and the "computer"
+involved is called an automaton which is nothing but a model of
+computation. We choose to represent various computational problems as
+languages because we already have established a terminology for
+dealing with languages.</p>
+<p>To perform some computation in a Turing Machine we write a program
+for the machine. This program is basically a set of transition rules.</p>
+<p>Given any string as input the Turing Machine can do one of three
+things. It can stop and <strong>accept</strong> the string or it can <strong>reject</strong> the
+string or it can <strong>loop</strong> indefinitely over the input.</p>
+<p>When the TM is in either the accept or the reject state after
+processing a string then we say that the TM has halted (as in stopped
+running on the output). On the other hand if the TM does not halt and
+instead keeps on looping indefinitely then it means that the TM will
+never stop working or never halt. When a TM has halted it indicates
+that the TM has decided the string (either accept or reject) on the
+other hand when it does not halt then the string (or rather the
+problem) is said to be undecidable.</p>
+<p>All this can get quite intense, so here is an intuitive definition of
+computation by a Turing
+Machine. The
+<a href="https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis">Church-Turing thesis</a> showed
+that a Turing Machine algorithm captures <strong>all</strong> algorithms. This
+means that if for a given problem we can design a Turing Machine
+algorithms then that problem is actually solvable. As we will soon
+see that there are certain problems that are so complex that there
+exists no algorithm that can solve them. In-fact while describing
+Turing Machine algorithms we do not need to go into the implementation
+level details of how the head and the tapes move; instead we can just
+use English prose to describe an algorithm. The only requirement is
+that an algorithm to stop in a finite number of steps (this is quite
+literally the definition of an algorithm).</p>
+<h2>Universal Turing Machine</h2>
+<p>A Turing Machine is generally programmed to perform only a single type
+of computation. However there is a class of Turing Machines called the
+Universal Turing Machine which can perform any sort of computation. In
+fact this property of this Turing Machine is what makes a Turing
+Machine such a powerful model for computation. </p>
+<p>The Universal Turing Machine can simulate any arbitrary Turing machine
+on any arbitrary string. It does this by reading the description of
+the Turing machine and the string input from its own tape and then
+processing them.</p>
+<p>This makes the Turing Machine capable of answering questions about the
+behavior of other Turing machines. This model of computation is a
+very accurate model of modern computers where computers have access to
+a random access memory. This is the same as the tape in a Turing
+Machine.</p>
+<p>Thus the problems these Turing Machines can tackle are generally of
+the form where we test the behavior of some arbitrary Turing machine
+on some arbitrary input.</p>
+<h2>The Halting Problem</h2>
+<p>The Halting Problem is a decision problem of determining whether any
+arbitrary Turing Machine will halt on an arbitrary string input or
+not. </p>
+<p>In other words lets say that we have a Language <span class="math">\(H_{Lang}\)</span> which is
+made up of all string encoding of the form <span class="math">\(&lt;B,w&gt;\)</span> where <span class="math">\(B\)</span> is a
+Turing Machine and <span class="math">\(w\)</span> is a string and <span class="math">\(B\)</span> halts on <span class="math">\(w\)</span>. We need to
+show that <span class="math">\(H_{Lang}\)</span> is undecidable. Which means that there isn't a
+single imaginable Turing Machine that can decide <span class="math">\(H_{Lang}\)</span>.</p>
+<blockquote>
+<p>Which means that no one can ever design a Turing Machine that will
+be able to take an arbitrary string <span class="math">\(w\)</span> and an arbitrary Turing
+machine <span class="math">\(B\)</span> and tell whether <span class="math">\(B\)</span> will halt on <span class="math">\(w\)</span> or not. </p>
+</blockquote>
+<p>Now, this might seem like a fairly un-important detail but this has
+some far-reaching implications as we will soon see. But before that we
+will prove the above statement. This is a fun proof that illustrates
+how to think about these problems in general.</p>
+<h3>Proof</h3>
+<p>Let us assume that such a machine does exist and let us call it
+<span class="math">\(H_{TM}\)</span>.</p>
+<p>Construction of <span class="math">\(H_{TM}\)</span>:</p>
+<ul>
+<li><strong>Input :</strong> String <span class="math">\(&lt;B,w&gt;\)</span>, where <span class="math">\(B\)</span> is a TM and <span class="math">\(w\)</span> is a string.</li>
+<li><strong>Run :</strong> Simulates <span class="math">\(w\)</span> on <span class="math">\(B\)</span>.</li>
+<li><strong>Accepts :</strong> <span class="math">\(w\)</span> if <span class="math">\(B\)</span> halts on <span class="math">\(w\)</span></li>
+<li><strong>Rejects :</strong> <span class="math">\(w\)</span> if <span class="math">\(B\)</span> does not halt on <span class="math">\(w\)</span>.</li>
+</ul>
+<p><em>This</em> is the decider that we have to prove can not exist.</p>
+<p>Now, since <span class="math">\(H_{TM}\)</span> already exists we can use this machine to
+construct another Turing Machine <span class="math">\(D_{TM_H}\)</span> which has <span class="math">\(H_{TM}\)</span> as a
+subroutine (hence the sub-subscript notation).</p>
+<p>Construction of <span class="math">\(D_{TM_H}\)</span>:</p>
+<ul>
+<li><strong>Input :</strong> String <span class="math">\(&lt;M&gt;\)</span>, where <span class="math">\(M\)</span> is a Turing machine</li>
+<li><strong>Runs :</strong> Simulates <span class="math">\(&lt;M, &lt;M&gt;&gt;\)</span> on <span class="math">\(H_{TM}\)</span></li>
+<li><strong>Accepts :</strong> <span class="math">\(&lt;M&gt;\)</span> if <span class="math">\(H_{TM}\)</span> rejects <span class="math">\(&lt;M, &lt;M&gt;&gt;\)</span>, i.e. if <span class="math">\(M\)</span> rejects <span class="math">\(&lt;M&gt;\)</span></li>
+<li><strong>Rejects :</strong> <span class="math">\(&lt;M&gt;\)</span> if <span class="math">\(H_{TM}\)</span> accepts <span class="math">\(&lt;M, &lt;M&gt;&gt;\)</span>, i.e. if <span class="math">\(M\)</span> accepts <span class="math">\(&lt;M&gt;\)</span></li>
+</ul>
+<blockquote>
+<p><strong>Now, what happens if we run <span class="math">\(D_{TM_H}\)</span> on <span class="math">\(&lt;D_{TM_H}&gt;\)</span> ?</strong></p>
+</blockquote>
+<p>By the above Accept and Reject conditions, </p>
+<ul>
+<li>If <span class="math">\(D_{TM_H}\)</span> <strong>accepts</strong> <span class="math">\(&lt;D_{TM_H}&gt;\)</span>, then it means that <span class="math">\(H_{TM}\)</span>
+  rejected <span class="math">\(&lt;D_{TM_H}, &lt;D_{TM_H} &gt;&gt;\)</span> which means that <span class="math">\(D_{TM_H}\)</span>
+  <strong>rejects</strong> <span class="math">\(&lt;D_{TM_H}&gt;\)</span></li>
+<li>If <span class="math">\(D_{TM_H}\)</span> <strong>rejects</strong> <span class="math">\(&lt;D_{TM_H}&gt;\)</span>, then it means that <span class="math">\(H_{TM}\)</span>
+  accepted <span class="math">\(&lt;D_{TM_H}, &lt;D_{TM_H} &gt;&gt;\)</span> which means that <span class="math">\(D_{TM_H}\)</span>
+  <strong>accepted</strong> <span class="math">\(&lt;D_{TM_H}&gt;\)</span></li>
+</ul>
+<p>This is a contradiction because it implies that <span class="math">\(D_{TM_H}\)</span> accepts
+itself if it rejects itself.</p>
+<p>Hence our initial assumption about the existence of <span class="math">\(H_{TM}\)</span> must be
+wrong. Hence <span class="math">\(H_{TM}\)</span> can not exist.</p>
+<h6>There is another proof for this that uses the Cantor's diagonalisation argument</h6>
+<h3>Conclusion</h3>
+<p>This means that</p>
+<blockquote>
+<p>There does not exist a single algorithm that can us if another
+algorithm will halt or not</p>
+</blockquote>
+<p>Static analyzers try and do solve some of these limitations but yes,
+they are not 100% accurate, because they are mathematically guaranteed
+to not be 100% accurate.</p>
+<p>This post is part of a series of posts that I have planned. In the
+next one we will talk about Godels Incompletelness Theorems and
+Hilberts Problems.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script></div>
+	<hr>
+	<!-- <h2>Comments</h2> -->
+	<!--  -->
+	<!--  -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://signalshore.github.io/about.html"><i class="fa fa-About "></i> About</a></li>
+							<li><a href="https://signalshore.github.io/cv.html"><i class="fa fa-CV "></i> CV</a></li>
+							<li><a href="https://signalshore.github.io/feeds/all.atom" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Social</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://twitter.com/sohom154">Twitter</a></li>
+							<li><a href="https://github.com/83bytes">Github</a></li>
+							<li><a href="https://gitlab.com/83bytes">Gitlab</a></li>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<h4>Tags</h4>
+						<ul class="list-unstyled my-list-style">
+						<a href="https://signalshore.github.io/tag/tech.html">Tech</a>,
+						<a href="https://signalshore.github.io/tag/meta.html">Meta</a>,
+						<a href="https://signalshore.github.io/tag/learning.html">Learning</a>,
+						<a href="https://signalshore.github.io/tag/cs.html">CS</a>,
+						<a href="https://signalshore.github.io/tag/misc.html">Misc</a>,
+						<a href="https://signalshore.github.io/tag/env.html">Env</a>,
+						<a href="https://signalshore.github.io/tag/travel.html">Travel</a>,
+						<a href="https://signalshore.github.io/tag/math.html">Math</a>,
+						<a href="https://signalshore.github.io/tag/data.html">Data</a>,
+						<a href="https://signalshore.github.io/tag/cycling.html">Cycling</a>,
+						<a href="https://signalshore.github.io/tag/guix.html">Guix</a>,
+						<a href="https://signalshore.github.io/tag/work.html">Work</a>,
+						<a href="https://signalshore.github.io/tag/scheme.html">Scheme</a>,
+						<a href="https://signalshore.github.io/tag/activism.html">Activism</a>,
+						<a href="https://signalshore.github.io/tag/linux.html">Linux</a>,
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+		  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /> </a>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

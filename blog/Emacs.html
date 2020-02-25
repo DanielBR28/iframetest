@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>The Emacs Way — SignalShore</title>
+	<meta name="description" content="Title: The Emacs Way; Date: 2018-01-17; Author: Sohom">
+	<meta name="author" content="Sohom">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://signalshore.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://signalshore.github.io/theme/css/ipython.css" rel="stylesheet">
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://signalshore.github.io/">SignalShore</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">The Emacs Way</h1>
+		<time datetime="2018-01-17T00:00:00+05:30" itemprop="datePublished">Wed 17 January 2018</time>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			[<a href="https://signalshore.github.io/tag/cs.html" rel="tag">CS</a>]
+		</span>
+		
+		<span itemprop="keywords">
+			[<a href="https://signalshore.github.io/tag/linux.html" rel="tag">Linux</a>]
+		</span>
+		
+	</div>
+	<div itemprop="articleBody" class="article-body"><h3>Starting out with Emacs</h3>
+<p>Like any other person who uses Linux I too started out by using vim as
+my default text editor. This was a time when I did not know the
+amazing world of vim plugins. It was a good journey for a while and
+over time my vim config grew up to a point where it was the perfect
+setup.</p>
+<p>Then, I discovered Emacs and I moved to Emacs. In the previous
+sentence using the work "discovered" is wrong because I did not
+"discover" it in the strictest sense of the word. I started using
+Emacs because someone (this person is an Emacs and Scheme veteran
+(actually a LISP)) told me that the best IDE for learning Scheme is to
+use Emacs. Over time I found Emacs to be the most perfect piece of
+software that you could possibly want.</p>
+<h3>What is Emacs ?</h3>
+<p><a href="https://www.gnu.org/software/emacs/">Emacs</a> is
+marketed as a Text Editor which is a huge oversimplification of what
+Emacs actually is.</p>
+<p>Let me tell you what Emacs really is. The standard version of Emacs
+<em>without</em> any extra plugins comes with a text-editor, an interpreter
+(for Emacs-Lisp), a package manager (for Emacs), a Planner (org-mode),
+a Calendar, a File manager, and a mail/news reader all rolled into one
+eco-system. At a fundamental level Emacs is an interpreter for
+Emacs-Lisp, all of these goodness comes from the awesomeness of LISP
+(or eLISP in this case).</p>
+<p>I am unable to form sentences about stuff I wanna say and I really
+like lists. So, I will list out stuff and go on explaining them.</p>
+<p>This is a list of the reasons why I like Emacs:</p>
+<ul>
+<li>
+<p><strong>Config</strong> : The Emacs config is just a eLisp script. This enables
+  it to be loaded dynamically and the changes also reflect dynamically
+  without having to restart the application. A configuration written
+  in eLisp means that you do not have to learn some weird brain-dead
+  language just to configure a text editor (I'm looking
+  at
+  <a href="https://en.wikipedia.org/wiki/Vim_(text_editor)#Vim_script">Vim script</a>).</p>
+</li>
+<li>
+<p><strong><a href="https://en.wikipedia.org/wiki/Literate_programming">Literate Programming</a></strong> :
+  By default the Emacs configuration file <em>init.el</em> to store the Emacs
+  config. This becomes messy as after some time you end up with a
+  mess. Thus I decided that it would be a good idea to store the user
+  config is a separate file and have Emacs generate the actual
+  configuration from it . So I write my config in an Org-mode file and
+  I let Emacs handle the
+  rest. <a href="https://gitlab.com/83bytes/emacs-config">This</a> is where I
+  have uploaded my Emacs config. The file <em>init.el</em> is the default
+  Emacs config file. I write my config in the <em>config.org</em> file and
+  Emacs generates the file <em>config.el</em></p>
+</li>
+<li>
+<p><strong><a href="https://www.emacswiki.org/emacs/Evil">Evil</a></strong> : This mode allows me
+  to use vim key-bindings. Thus I did not have to retrain the muscle
+  memory to learn Emacs</p>
+</li>
+<li>
+<p><strong><a href="https://magit.vc/">Magit</a></strong> : Used to manage git repos. Magit is
+  a Git porcelain. It exposes a lot of gits high level functionality
+  through a very easy to use interface. The best thing that magit did
+  for me was that it got in the habit of staging only certain files or
+  sometimes even parts of a file really easily. Also magit logs are so
+  much better than git log</p>
+</li>
+<li>
+<p><strong><a href="https://orgmode.org/">Org-mode</a></strong> : This mode is just
+  phenomenal. It is a mode where Emacs does incredibly amazing things
+  with just text files. Before using org-mode I had struggled a lot
+  with to-do lists. The first thing that org-mode did for me was to
+  remove that problem from my life. After using it for sometime I
+  wanted to configure org-mode for myself and it was very easy to do
+  so. So at this point I have a configure-able to-do list
+  application. But there are other uses more fascinating than the
+  to-do list thingy. Org-mode files being just text files are
+  incredibly easy to read even if you do not have Emacs. Thus you are
+  not dependent on Emacs.</p>
+</li>
+<li>
+<p><strong>Open-ness</strong> : The documentation part of Emacs is like the Cherry on
+  top. Emacs is like the truly Free and Open Source software. Since
+  it is written in LISP which is not compiled, we can view every
+  source code that is used in Emacs. In-fact most of the plugins that
+  are installed are just big elisp files. Thus, technically it is very
+  much possible for a user to change the code of Emacs while it is
+  running. In-fact this is exactly what we do when we change the config
+  file and load it.</p>
+</li>
+<li>
+<p><strong>Documentation</strong> : Emacs embraces documentation like a boss. With
+  Emacs you have complete transparency. Using the help menu you can
+  see anything you want about emacs' internals. This includes
+  variables that are defined within Emacs, definition/descriptions of
+  proceudres (yes!! you can type a procedure name and Emacs would pull
+  up the procedure description, if you want then you could visit the
+  file where the procedure is defined and change it and the changes
+  would be reflected dynamically (you would still have to eval the
+  file(s) that you have changed)). Apart from that you can also query
+  keybindgins and Emacs will tell you which functions is that key
+  bound to. This is particularly very useful when you want to figure
+  out what a key-binding is doing (look at the procedure definiton and
+  so on!!). IMHO no other editor even comes close to this
+  feature. This self-documenting feature was a life saver for me when
+  I was starting out with Emacs.</p>
+</li>
+<li>
+<p><strong>Writing Documents</strong> : I really hate using a word-processor and
+  honestly sometimes using LibreOffice is not so much fun. With
+  org-mode I can just write a file in org-mode and then export it to
+  any desired format. And this export is not a shitty export. Org-Mode
+  actually creates a hierarchical index based on the highlights in
+  org-mode. Moreover Org-mode can export the three main formats that I
+  need the most - odt, pdf, md (the markdown looks beautiful)</p>
+</li>
+<li>
+<p><strong>Dired</strong> : The Emacs file manager. Dired is the file manager that
+  comes with Emacs. Now how many of you have tried to install a file
+  browser in vim because that makes it easier to navigate the source
+  code directory ?... Yeah.. Emacs has that built-in. Which means that
+  it was much well integrated with the rest of the stuff and also that
+  you do not have to put yourself through the agony of installing a
+  new plugin</p>
+</li>
+<li>
+<p><strong>Package System</strong> : Emacs has its own package manager and its own
+  repositories. This means that installing a new package is as simple
+  as 'M-x package-install <RET> package-name <RET>'. Emacs will find
+  the package, download it, compile it and do the necessary things on
+  its own. Configuring the packages requires some more work but that
+  is also taken care of by the configuration system</p>
+</li>
+<li>
+<p><strong><a href="https://www.emacswiki.org/emacs/Helm">Helm-mode</a></strong> :  This is  a
+  framework  that  enables  you  to  quickly  access  anything  within
+  Emacs. This  means that  with its  fuzzy matching,  it can  fish for
+  commands even before you have finished typing your command. Thus you
+  can look  for Emacs commands and  files very fast. It  uses an async
+  library in the back-end that makes it this fast.</p>
+</li>
+<li>
+<p><strong>LISP</strong> : Emacs is the best possible IDE for learning
+  LISP. With <a href="http://www.nongnu.org/geiser/">Geiser</a> I can now run a
+  scheme REPL inside Emacs while I write code and then execute them
+  from the file itself. This is just seamless and amazing.</p>
+</li>
+<li>
+<p><strong><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html">Server mode</a></strong> :
+  Emacs is quite heavy, so it takes some time to startup. This means
+  that the typical workflow which I used to have with vim would never
+  work here. With vim i would just open a new instance of vim wherever
+  I needed it. Vim is small and fast. But with Emacs it doesn't make
+  sense to open a new instance of Emacs for editing a new file. The
+  solution is to us the Emacs Server Mode. In this mode Emacs runs a
+  server daemon and we can use the program 'emacsclient' to connect to
+  the server. Emacsclient does not create a new instance of Emacs,
+  instead it connects to the Emacs server and merely opens a new frame
+  or it sends that file to the already opened frame. After editing the
+  file we can close that file and it will be saved normally. Thus now
+  I can edit a file from anywhere I want within this system. Also
+  editing the desktop entry to Emacs enabled me to add a code snippet
+  that will call emacsclient whenever I try to open any text file from
+  the File Manager.</p>
+</li>
+</ul>
+<h2>Other Cool stuff</h2>
+<p>Here are some other interesting things that you can do with Emacs that
+I want to try out.</p>
+<ul>
+<li><strong><a href="https://github.com/skeeto/elfeed">elfeed</a></strong> : This is a client
+  that reads RSS and ATOM feeds.</li>
+<li><strong>mail client</strong> : Some of my friends use Emacs as their email client. I
+  haven't gotten around to doing it yet.</li>
+<li><strong>EXWM</strong> : This is a window manager that uses Emacs. Its called Emacs
+  Window Manager. I have used it briefly but I have not switched to it
+  yet.</li>
+</ul>
+<h2>Conclusion</h2>
+<p>Emacs is great! 
+Vim is great too. (I also use vim when I am working on a server)</p>
+<p>Emacs is a religion.</p></div>
+	<hr>
+	<!-- <h2>Comments</h2> -->
+	<!--  -->
+	<!--  -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://signalshore.github.io/about.html"><i class="fa fa-About "></i> About</a></li>
+							<li><a href="https://signalshore.github.io/cv.html"><i class="fa fa-CV "></i> CV</a></li>
+							<li><a href="https://signalshore.github.io/feeds/all.atom" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Social</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://twitter.com/sohom154">Twitter</a></li>
+							<li><a href="https://github.com/83bytes">Github</a></li>
+							<li><a href="https://gitlab.com/83bytes">Gitlab</a></li>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<h4>Tags</h4>
+						<ul class="list-unstyled my-list-style">
+						<a href="https://signalshore.github.io/tag/tech.html">Tech</a>,
+						<a href="https://signalshore.github.io/tag/meta.html">Meta</a>,
+						<a href="https://signalshore.github.io/tag/learning.html">Learning</a>,
+						<a href="https://signalshore.github.io/tag/cs.html">CS</a>,
+						<a href="https://signalshore.github.io/tag/misc.html">Misc</a>,
+						<a href="https://signalshore.github.io/tag/env.html">Env</a>,
+						<a href="https://signalshore.github.io/tag/travel.html">Travel</a>,
+						<a href="https://signalshore.github.io/tag/math.html">Math</a>,
+						<a href="https://signalshore.github.io/tag/data.html">Data</a>,
+						<a href="https://signalshore.github.io/tag/cycling.html">Cycling</a>,
+						<a href="https://signalshore.github.io/tag/guix.html">Guix</a>,
+						<a href="https://signalshore.github.io/tag/work.html">Work</a>,
+						<a href="https://signalshore.github.io/tag/scheme.html">Scheme</a>,
+						<a href="https://signalshore.github.io/tag/activism.html">Activism</a>,
+						<a href="https://signalshore.github.io/tag/linux.html">Linux</a>,
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+		  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /> </a>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

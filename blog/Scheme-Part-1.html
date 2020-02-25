@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Scheme - Part 1 - Wishful Thinking and Abstraction — SignalShore</title>
+	<meta name="description" content="Title: Scheme - Part 1 - Wishful Thinking and Abstraction; Date: 2017-11-20; Author: Sohom">
+	<meta name="author" content="Sohom">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://signalshore.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://signalshore.github.io/theme/css/ipython.css" rel="stylesheet">
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://signalshore.github.io/">SignalShore</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Scheme - Part 1 - Wishful Thinking and Abstraction</h1>
+		<time datetime="2017-11-20T00:00:00+05:30" itemprop="datePublished">Mon 20 November 2017</time>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			[<a href="https://signalshore.github.io/tag/cs.html" rel="tag">CS</a>]
+		</span>
+		
+		<span itemprop="keywords">
+			[<a href="https://signalshore.github.io/tag/scheme.html" rel="tag">Scheme</a>]
+		</span>
+		
+	</div>
+	<div itemprop="articleBody" class="article-body"><h3>Prologue</h3>
+<p>I started
+learning
+<a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">LISP</a>
+(actually a dialect of LISP
+called
+<a href="https://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</a>)
+sometime back. The inspiration for learning Scheme was that it is
+a completely new programming paradigm
+i.e. <a href="https://en.wikipedia.org/wiki/Functional_programming">functional programming</a> language
+and I wanted to learn a non-Object-Oriented programming
+language. Anyway, so I looked
+at
+<a href="https://en.wikipedia.org/wiki/Haskell_(programming_language)">Haskell</a>
+as its a purely functional programming language, but I picked Scheme
+because of the
+book
+<a href="https://mitpress.mit.edu/sicp/full-text/book/book.html">Structure and Interpretation of Computer Programs</a> (referred
+to as SICP hereafter).</p>
+<h3>What is this ?</h3>
+<p>Even though I started about 1 year back I did not make much progress
+and I realized that one of the main reasons was that I was not doing
+the exercises with enough rigor. Thinking about a solution is very
+different than writing an actual program. So I decided that I would do
+the exercises and put them
+on <a href="https://gitlab.com/83bytes">Gitlab</a> and then write about
+them. Furthermore during this course of learning Scheme I've come
+across a lot of cool stuff that completely changed the way how I
+approached computer science and programming in general. I want to
+share those.</p>
+<h3>Lets start</h3>
+<p><strong>Let us write a program</strong></p>
+<p><img alt="sum pic" src="/assets/images/2017-11-20/sum.png"></p>
+<p>(these are cropped screen-shots of Emacs)</p>
+<p>This program takes three numbers and adds them. This is also how the
+scheme syntax looks. Scheme syntax is
+just <a href="https://en.wikipedia.org/wiki/S-expression">S-expressions</a> or
+symbolic expressions.</p>
+<p>Thinking about S-expressions is easy. 
+- Starting from the first "(" the first element is the operator
+- Everything that comes after the first operator are the operands
+- The end is the closing bracket ")"</p>
+<p><strong>How about a procedure (scheme word for functions)</strong></p>
+<p>In scheme we use the "define" keyword to define a procedure.</p>
+<p>Its syntax is like this <code>(define (&lt;name&gt; &lt;formal parameters) (&lt;body&gt;))</code></p>
+<p><strong>Let us define a procedure</strong></p>
+<p><img alt="sumProcedure" src="/assets/images/2017-11-20/procedureSum.png"></p>
+<p>This is how the procedure looks. The name of the procedure is "sum" and it takes in two numbers and produces their sum.</p>
+<p><strong>Let us write something a bit complicated</strong></p>
+<p><img alt="sumOfSquare" src="/assets/images/2017-11-20/sumOfSquares.png"></p>
+<p>This procedure uses the previous "sum" procedure to compute the sum of
+the square of two numbers. I this process you should see another
+procedure that we have defined which is called "square". This is an
+accessory procedure. We could have no used it and it wouldn't have
+mattered too much. </p>
+<p><em>NOW!! here is the kicker! :-P</em></p>
+<p>Imagine for a second that you did
+not know how addition, multiplication, division etc worked. You could
+still define the procedure "sumOfSquares" knowing that you have
+procedures called "sum" and "square" that will take care of the
+internal operations for you.</p>
+<p>What this enables you to do is do a top down design approach to
+things.  While designing apps (nothing too big) in C++ I found myself
+being too worried about what were all the small parts the should make
+up the program, But after starting to read this book apart from
+learning scheme I also learned this model of thinking.</p>
+<p>The writers call this "wishful thinking"; as in you wish that
+something existed and then used it as if it existed. Then you tried to
+figure out if it did exist in the first place or not. If it does exist
+then fine; otherwise you design one.</p>
+<p>Which means that if at any point while designing a software you are
+un-sure about all sub-modules that will be required to make that
+module work then you do not start designing the sub-modules and build
+up from there. Instead you design the current module and then design
+the sub-modules to match the requirement set up by the module. This is
+top-down design approach.</p>
+<p>For example when designing "sumOfSquares" you need not think about how
+you will implement it. You can just write the code and then you can
+sit down and figure out how "sum" and "square" would work. At the time
+of writing the sumOfSquare you do not know if <em>sum</em> and <em>square</em>
+exist. You just use them as if they did existed.</p>
+<p>This also means that while wiring the sumOfSquare procedure you need
+not bother about how <em>sum</em> and <em>square</em> will be implemented. You can
+just use them as it is.</p>
+<p>This brings me to my next point. </p>
+<h3>Abstraction</h3>
+<p>Every procedure is like a layer of abstraction that is telling you to
+not worry about how it works and instead focus on the task at hand.
+This idea is immensely helpful. Its so simple. If you don't know how
+to do something; just write a procedure that does it; then worry about
+the procedure later.</p>
+<p>I didn't think much about this until recently when I started doing
+the exercises in the book more seriously. Its great once you get the
+hang of it.</p>
+<h3>Conclusion</h3>
+<p>This is not the I have more things to share. Hopefully I will be able
+to write about them soon. :-P</p>
+<p><a href="https://gitlab.com/83bytes/sicp">Here</a> is the Gitlab Repo where I will keep uploading my SICP exercises.</p></div>
+	<hr>
+	<!-- <h2>Comments</h2> -->
+	<!--  -->
+	<!--  -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://signalshore.github.io/about.html"><i class="fa fa-About "></i> About</a></li>
+							<li><a href="https://signalshore.github.io/cv.html"><i class="fa fa-CV "></i> CV</a></li>
+							<li><a href="https://signalshore.github.io/feeds/all.atom" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Social</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://twitter.com/sohom154">Twitter</a></li>
+							<li><a href="https://github.com/83bytes">Github</a></li>
+							<li><a href="https://gitlab.com/83bytes">Gitlab</a></li>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<h4>Tags</h4>
+						<ul class="list-unstyled my-list-style">
+						<a href="https://signalshore.github.io/tag/tech.html">Tech</a>,
+						<a href="https://signalshore.github.io/tag/meta.html">Meta</a>,
+						<a href="https://signalshore.github.io/tag/learning.html">Learning</a>,
+						<a href="https://signalshore.github.io/tag/cs.html">CS</a>,
+						<a href="https://signalshore.github.io/tag/misc.html">Misc</a>,
+						<a href="https://signalshore.github.io/tag/env.html">Env</a>,
+						<a href="https://signalshore.github.io/tag/travel.html">Travel</a>,
+						<a href="https://signalshore.github.io/tag/math.html">Math</a>,
+						<a href="https://signalshore.github.io/tag/data.html">Data</a>,
+						<a href="https://signalshore.github.io/tag/cycling.html">Cycling</a>,
+						<a href="https://signalshore.github.io/tag/guix.html">Guix</a>,
+						<a href="https://signalshore.github.io/tag/work.html">Work</a>,
+						<a href="https://signalshore.github.io/tag/scheme.html">Scheme</a>,
+						<a href="https://signalshore.github.io/tag/activism.html">Activism</a>,
+						<a href="https://signalshore.github.io/tag/linux.html">Linux</a>,
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+		  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /> </a>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

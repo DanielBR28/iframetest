@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Undecidability and Incompleteness — SignalShore</title>
+	<meta name="description" content="Title: Undecidability and Incompleteness; Date: 2018-11-07; Author: Sohom">
+	<meta name="author" content="Sohom">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://signalshore.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://signalshore.github.io/theme/css/ipython.css" rel="stylesheet">
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://signalshore.github.io/">SignalShore</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Undecidability and Incompleteness</h1>
+		<time datetime="2018-11-07T00:00:00+05:30" itemprop="datePublished">Wed 07 November 2018</time>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			[<a href="https://signalshore.github.io/tag/cs.html" rel="tag">CS</a>]
+		</span>
+		
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>In the <a href="https://signalshore.github.io/blog/Turing-Machine-and-Halting-Problem.html">previous post</a>
+we looked at a Turing Machine and the Halting problem.  A Halting
+problems is type of decision problem for a Turing Machine.</p>
+<p>Recall that a Turing Machine has three final states:</p>
+<ul>
+<li>Accept -&gt; The machine accepts the string</li>
+<li>Reject -&gt; The machine rejects the string</li>
+<li>Loop indefinitely -&gt; The machine neither accepts nor rejects the string; its still processing it</li>
+</ul>
+<p>Now it is quite evident that in the Accept and Reject states the
+Turing Machine can tell you something definite about the string that
+it is processing. Thus, when a Turing Machine reaches one of these
+states we say that the Turing Machine has <em>decided</em> the language
+(recall that all TM problems are represented in the form of Languages). </p>
+<p>On the other hand we have situations where the Turing Machine fails to
+decide a language. In fact we have a whole class of such
+languages. These languages are called undecidable languages.</p>
+<p>The Halting Problem that we looked at in the last essay is one such problem.</p>
+<h2>Undecidability and Undecidable Problems</h2>
+<p>Undecidability is one of those concepts in Theoretical Computer
+Science that fascinates me in ways I can not even begin explain. </p>
+<p>There are certain types of decision-problems for which there is no
+algorithm that can reliably give a yes-no answer.</p>
+<p>The implications of this are quite interesting. </p>
+<p>This means that you can not have a program that tells you whether a
+program will produce an output or not (and consequently keep running
+for-ever). Like how our compilers still can not tell us when we will hit
+an infinite-loop. The only way to find out is to actually run the
+program. This is serious research topic in computer science; designing
+accurate static analyzers.</p>
+<h2>Hilbert's problems</h2>
+<p>In 1900 mathematician David Hilbert published a list of 23
+problems. In 1928 he returned to the second question out of these 23
+asking three fundamental questions about mathematics.</p>
+<ul>
+<li>Is mathematics complete ?</li>
+<li>Is mathematics consistent ?</li>
+<li>Is mathematics decidable ?</li>
+</ul>
+<p>The main reason for these questions was to establish a set of
+<em>fundamental</em> axioms about mathematics using which you could prove any
+theorem in mathematics. Now, the idea was that even if all of such
+axioms were not known we could find them out.</p>
+<p>Three years later in 1931 Kurt Godel published solutions to the first
+two questions, these are known as Godel's incompleteness theorems.</p>
+<p>The Wikipedia page
+for
+<a href="https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems">Godel's incompleteness theorem</a> states
+that</p>
+<p>The first incompleteness theorem:</p>
+<blockquote>
+<p>no consistent system
+of axioms whose theorems can be listed by an effective procedure
+(i.e., an algorithm) is capable of proving all truths about the
+arithmetic of the natural numbers. For any such formal system, there
+will always be statements about the natural numbers that are true, but
+that are unprovable within the system.</p>
+</blockquote>
+<p>The second incompleteness theorem:</p>
+<blockquote>
+<p>the system in question cannot demonstrate its own consistency.</p>
+</blockquote>
+<p><br></p>
+<p>All this is fine; but what does it actually mean for mathematics and computer science ?</p>
+<p>For mathematics it means that mathematics is not complete. Hence there
+is a very good possibility that certain problems exist in mathematics
+which can never be proven. (For
+example. the
+<a href="https://en.wikipedia.org/wiki/Riemann_hypothesis">Riemann hypothesis</a>
+etc)</p>
+<p>For Computer Science this means that there are certain programs that
+are non-computable.  Yes, this basically puts a limit on the type of
+programs that you can write.</p>
+<h2>Entscheidungsproblem (or the Decision problem)</h2>
+<p>This problem is referred to as
+the
+<a href="https://en.wikipedia.org/wiki/Entscheidungsproblem">Decision problem</a>
+posed by David Hilbert. This problem asks for an algorithm that takes
+in a logical statement statement and then says either "yes" or "no" as
+to whether the statement is true or not. For the sake of simplicity
+we can assume that the algorithm is aware of all the axioms (or rules)
+that is needed to say "yes" or "no".</p>
+<p>The solution of this problem was given by both Alan Turing and Alonzo
+Church in 1936. Alonzo Church created a method of defining functions
+called the Lambda Calculus while Alan Turing created a model of
+computation called the Turing Machine.</p>
+<p>The final result was the no such algorithm can exist. </p>
+<p>What does this mean for mathematics and computer science ?</p>
+<p>For mathematics it means that not only are there certain problems that
+can not be solved (or proved) but there is no way for us to know
+whether a problem is solvable or not without actually trying to
+solve the problem.</p>
+<p>For
+example
+<a href="https://en.wikipedia.org/wiki/Fermat%27s_Last_Theorem">Fermat's Last theorem</a> was
+assumed to unsolvable and it remained unsolved for about 358 years
+until Andrew Wiles solved it.</p>
+<p>Similarly we have other challenging problems such as the Riemann
+Hypothesis etc.</p>
+<p>For computer science it means that we can not have some program that
+tells you whether your program will work or not. Lets break this in a
+lil bit more.</p>
+<h3>Thinking exercise for CS people.</h3>
+<p>Sit down.</p>
+<p>Write a program that will take any other program and tell you if that
+other program will stop or not.</p>
+<h3>Disclaimer</h3>
+<p>I am not expert in any of this by any stretch of the
+imagination. I'm just starting out and there is a of chance that I do
+not understand this fully. Maybe 20 years later I will look at these
+and laugh at myself. Maybe my understanding of these is completely
+wrong or misguided. </p>
+<p>But, right now I love reading about these and that i good enough for
+me and honestly the the presented above are good enough. </p>
+<p>I would rather be wrong about these right now than not study waiting
+for the correct time or the correct opportunity or the correct
+resource to study from. I've made that error before and I do not want
+to make it again. </p></div>
+	<hr>
+	<!-- <h2>Comments</h2> -->
+	<!--  -->
+	<!--  -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://signalshore.github.io/about.html"><i class="fa fa-About "></i> About</a></li>
+							<li><a href="https://signalshore.github.io/cv.html"><i class="fa fa-CV "></i> CV</a></li>
+							<li><a href="https://signalshore.github.io/feeds/all.atom" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Social</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://twitter.com/sohom154">Twitter</a></li>
+							<li><a href="https://github.com/83bytes">Github</a></li>
+							<li><a href="https://gitlab.com/83bytes">Gitlab</a></li>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<h4>Tags</h4>
+						<ul class="list-unstyled my-list-style">
+						<a href="https://signalshore.github.io/tag/tech.html">Tech</a>,
+						<a href="https://signalshore.github.io/tag/meta.html">Meta</a>,
+						<a href="https://signalshore.github.io/tag/learning.html">Learning</a>,
+						<a href="https://signalshore.github.io/tag/cs.html">CS</a>,
+						<a href="https://signalshore.github.io/tag/misc.html">Misc</a>,
+						<a href="https://signalshore.github.io/tag/env.html">Env</a>,
+						<a href="https://signalshore.github.io/tag/travel.html">Travel</a>,
+						<a href="https://signalshore.github.io/tag/math.html">Math</a>,
+						<a href="https://signalshore.github.io/tag/data.html">Data</a>,
+						<a href="https://signalshore.github.io/tag/cycling.html">Cycling</a>,
+						<a href="https://signalshore.github.io/tag/guix.html">Guix</a>,
+						<a href="https://signalshore.github.io/tag/work.html">Work</a>,
+						<a href="https://signalshore.github.io/tag/scheme.html">Scheme</a>,
+						<a href="https://signalshore.github.io/tag/activism.html">Activism</a>,
+						<a href="https://signalshore.github.io/tag/linux.html">Linux</a>,
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+		  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /> </a>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>

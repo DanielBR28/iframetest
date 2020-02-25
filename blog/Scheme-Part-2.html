@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Scheme - Part 2 - Expressions and Evaluations — SignalShore</title>
+	<meta name="description" content="Title: Scheme - Part 2 - Expressions and Evaluations; Date: 2017-11-30; Author: Sohom">
+	<meta name="author" content="Sohom">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="https://signalshore.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="https://signalshore.github.io/theme/css/ipython.css" rel="stylesheet">
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="https://signalshore.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="https://signalshore.github.io/">SignalShore</a>
+			<br>	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">Scheme - Part 2 - Expressions and Evaluations</h1>
+		<time datetime="2017-11-30T00:00:00+05:30" itemprop="datePublished">Thu 30 November 2017</time>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			[<a href="https://signalshore.github.io/tag/cs.html" rel="tag">CS</a>]
+		</span>
+		
+		<span itemprop="keywords">
+			[<a href="https://signalshore.github.io/tag/scheme.html" rel="tag">Scheme</a>]
+		</span>
+		
+	</div>
+	<div itemprop="articleBody" class="article-body"><h3>S-expressions</h3>
+<p><a href="https://en.wikipedia.org/wiki/S-expression">S-expressions</a> or Sexprs or Symbolic Expressions are used to
+represented list like data. This was invented for and popularized by
+LISP. Lisp stands for LISt Processing. </p>
+<p>A list looks like this <code>(x y ... z)</code></p>
+<p>A list can be made up of other lists as well. Like so <code>(x (a b c) (d e f))</code></p>
+<p>In Lisp (and any other lisps) every program is a represented as a
+list. In-fact this is the one and only style of writing programs in
+LISP and this leads to some very interesting properties of lisp
+programs.
+1. Data and instructions (that work on the data) have similar
+   representation within the program structure.
+2. You have to pay close attention to evaluation models or how each
+   list is evaluated.
+3. The whole program can be represented as a tree.</p>
+<h3>Program Structure of Lisp</h3>
+<p>If we look at the structure of a LISP program we will notice that
+there is not proper structure to the code other than the usual LIST
+structure and everything within that language (from variables to
+procedure calls) are represented with the same structure. This is
+interesting because this is directly related to the kind of computing
+model this language is based on. Lisp is based on a model of computing
+called <a href="https://en.wikipedia.org/wiki/Lambda_calculus">Lambda Calculus</a>. It was invented by <a href="https://en.wikipedia.org/wiki/Alonzo_Church">Alonzo Church</a>.</p>
+<p>On the other hand procedural and object oriented languages are based
+on a model of computing called the <a href="https://en.wikipedia.org/wiki/Turing_machine">Turing Machine</a>. In these
+languages there is some structure that lets us differentiate between
+what is code and what is data, but that is not the case in
+Lisp. Infact in Lisp code is treated as data in the form of <a href="https://en.wikipedia.org/wiki/Higher-order_function">higher
+order procedures</a>.</p>
+<p>Lisp programs are trees. In other words the lists can be represented
+as tree such that
+- Every list within a pair of <em>(</em>  <em>)</em> is treat as a node in the tree
+- The very first element of every list is the first child of that node
+  in the tree. This is the operator.
+- Every other element of that list is a child of that node and are the
+  operators for that operand.</p>
+<p>The tree of the expression <code>(+ 2 3)</code> will look like this</p>
+<p><img alt="single tree" src="/assets/images/2017-11-30/single.jpg"></p>
+<p>A LISP program is very easily parse-able by a computer as Trees do
+not need complicated rules for traversal and other operations. In-fact
+this sounds almost similar to the parse-tree of a
+<a href="https://en.wikipedia.org/wiki/Context-free_grammar">Context-Free Grammar</a>.</p>
+<p><em><blue>The Substitution Model</blue></em></p>
+<p>This is probably one of the most simplest models of evaluation. It is
+also very powerful. It is also recursive in nature. Let us write a
+basic definition of the Evaluator.</p>
+<p>Let the Evaluator be <code>E</code>. It accepts an expression as input and
+evaluates it. Let the expression be <code>expr</code></p>
+<ul>
+<li>On receiving an expression <em>expr</em> evaluate the sub-expressions (using
+  the same model; so this is a recursive call to <em><code>E(sub_expr)</code></em> where
+  <em>sub_expr</em> is the sub expression)</li>
+<li>Apply the results of the sub-lists as operands to the operator of this list.</li>
+</ul>
+<p>In list the first element of any List is treated as the operator while
+the rest are treated as the operands.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nv">&gt;</span> <span class="p">(</span><span class="nb">+ </span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">;; + is the operator and 2, 3, 4 are the operands</span>
+<span class="nv">&gt;</span> <span class="mi">9</span>
+<span class="nv">&gt;</span> <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">;; * is the operator and 2, 3, 4 are the operands</span>
+<span class="nv">&gt;</span> <span class="mi">24</span>
+<span class="nv">&gt;</span> <span class="p">(</span><span class="nb">&gt; </span><span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>   <span class="c1">;; &gt; is the operator; this is equivalent to 2 &gt; 3 </span>
+<span class="nv">&gt;</span> <span class="nv">f</span>
+</pre></div>
+</td></tr></table>
+
+<p>This also applied for lists that have other lists in them. Let's have
+a look!</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nv">&gt;</span> <span class="p">(</span><span class="nb">+ </span><span class="mi">2</span> <span class="mi">3</span> <span class="p">(</span><span class="nb">+ </span><span class="mi">2</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nv">&gt;</span> <span class="mi">9</span>
+</pre></div>
+</td></tr></table>
+
+<p>Let us trace what happens here.  First the evaluator receives the
+expression <code>(+ 2 4 (+ 2 2))</code> and then it evaluates the internal list
+first. Which is <code>(+ 2 2)</code>. This expression evaluates to <code>4</code>.</p>
+<p>In the tree form this is how the above expression would look</p>
+<p><img alt="double" src="/assets/images/2017-11-30/double.jpg"></p>
+<p>Then the evaluator <em>substitutes</em> that result to the actual expression
+before continuing on with the evaluation. So now the expression looks
+like this <code>(+ 2 4 4)</code> and then we get the final answer.</p>
+<h3>Evaluation Strategies</h3>
+<p>Lisp uses an <a href="https://en.wikipedia.org/wiki/Evaluation_strategy#Applicative_order">Eager evaluation</a> strategy. This is also known as Strict
+Evaluation or Applicative evaluation. In this strategy all the
+operands are evaluated first before applying them to the function.</p>
+<p>In lisp this is the only structure that we have. So conditional
+branching (if-else, case). The if-construct in LISP looks like this.</p>
+<p><code>(if (expression) (expression1) (expression2))</code></p>
+<p>Now the <em>if</em> macro is special because it does not follow the normal
+evaluation strategy i.e. all the three expressions <em>expression</em>,
+<em>expression1</em> and <em>expression2</em> are not evaluated before the procedure
+is applied. In this macro only the first expression (<em>expression</em>) is
+evaluated first and if it evaluates to be true (<em>#t</em>) then
+<em>expression1</em> will be evaluated. Otherwise <em>expression2</em> will be
+evaluated.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">recursive</span> <span class="nv">x</span><span class="p">)</span>
+    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">x</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="mi">0</span>
+        <span class="p">(</span><span class="nf">recursive</span> <span class="p">(</span><span class="nb">- </span><span class="nv">x</span> <span class="mi">1</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="nf">recursive</span> <span class="nv">x</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>What happens when we evaluate the last expression ? Nothing
+spectacular. We just get the value <code>0</code> which is what it is supposed to
+do. We get this answer only because LISP uses normal order evaluation
+(lazy evaluation) for the <em>if</em> construct. If like the default strategy
+it used applicative order evaluation then both the <code>0</code> and the <code>(recursive
+(- x 1))</code> would be evaluated before calling the procedure and that
+would lead to an infinite loop. But the if-constructs uses <a href="https://en.wikipedia.org/wiki/Evaluation_strategy#Non-strict_evaluation">Normal order</a> evaluation or non-strict evaluation.</p>
+<p>My next program will illustrate this. For that we will define a
+<code>new-if</code> procedure that will do exactly what <code>if</code> does.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">new-if</span> <span class="nv">predicate</span> <span class="nv">exp1</span> <span class="nv">exp2</span><span class="p">)</span> 
+    <span class="p">(</span><span class="k">cond </span><span class="p">(</span><span class="nf">predicate</span> <span class="nv">exp1</span><span class="p">)</span>
+        <span class="p">(</span><span class="k">else </span><span class="nv">exp2</span><span class="p">)))</span>
+</pre></div>
+</td></tr></table>
+
+<p>This is the <em>new-if</em> procedure. Let us use this in our previous program.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">recursive-new</span> <span class="nv">x</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">new-if</span> <span class="p">(</span><span class="nb">= </span><span class="nv">x</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="mi">0</span>
+        <span class="p">(</span><span class="nf">recursive-new</span> <span class="p">(</span><span class="nb">- </span><span class="nv">x</span> <span class="mi">1</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="nf">recursive-new</span> <span class="nv">x</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>What happens now ? </p>
+<p><strong>NOW</strong> the thing goes into a spectacular infinite loop. That is
+because the <em>new-if</em> procedure will be evaluated using the applicative
+order strategy. Thus all the operands will be evaluated before the
+<em>new-if</em> procedure is called; and <em>recursive-new</em> has a call to
+itself. So in the end it all splatters exceptionally well.</p>
+<p>P.S. I have written this post based on my own
+experience which is a very very limited one. I do not claim that what
+I have just said is the ultimate truth or the <em>only</em> thing out
+there. My short life and my shorter experience with LISP is not nearly
+enough to cover the full depth and breadth of LISP</p></div>
+	<hr>
+	<!-- <h2>Comments</h2> -->
+	<!--  -->
+	<!--  -->
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://signalshore.github.io/about.html"><i class="fa fa-About "></i> About</a></li>
+							<li><a href="https://signalshore.github.io/cv.html"><i class="fa fa-CV "></i> CV</a></li>
+							<li><a href="https://signalshore.github.io/feeds/all.atom" type="application/atom+xml"><i class="fa fa-rss "></i> atom</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Social</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="https://twitter.com/sohom154">Twitter</a></li>
+							<li><a href="https://github.com/83bytes">Github</a></li>
+							<li><a href="https://gitlab.com/83bytes">Gitlab</a></li>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<h4>Tags</h4>
+						<ul class="list-unstyled my-list-style">
+						<a href="https://signalshore.github.io/tag/tech.html">Tech</a>,
+						<a href="https://signalshore.github.io/tag/meta.html">Meta</a>,
+						<a href="https://signalshore.github.io/tag/learning.html">Learning</a>,
+						<a href="https://signalshore.github.io/tag/cs.html">CS</a>,
+						<a href="https://signalshore.github.io/tag/misc.html">Misc</a>,
+						<a href="https://signalshore.github.io/tag/env.html">Env</a>,
+						<a href="https://signalshore.github.io/tag/travel.html">Travel</a>,
+						<a href="https://signalshore.github.io/tag/math.html">Math</a>,
+						<a href="https://signalshore.github.io/tag/data.html">Data</a>,
+						<a href="https://signalshore.github.io/tag/cycling.html">Cycling</a>,
+						<a href="https://signalshore.github.io/tag/guix.html">Guix</a>,
+						<a href="https://signalshore.github.io/tag/work.html">Work</a>,
+						<a href="https://signalshore.github.io/tag/scheme.html">Scheme</a>,
+						<a href="https://signalshore.github.io/tag/activism.html">Activism</a>,
+						<a href="https://signalshore.github.io/tag/linux.html">Linux</a>,
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+		  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /> </a>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+</body>
+</html>
