@@ -5,6 +5,47 @@
 <h2 id="iframeCatcher">iframe Catcher</h2>
 
 <button id="iframePitcher" onclick="pitchMessage()">Pitch to Host</button>
+<form>
+        <div style="margin: 10px 0px">
+            <div>
+                <div>
+                    Agency Name *:
+                </div>
+                <div>
+                    <input id="agency" type="text" value=""/>
+                </div>
+            </div>
+            <div>
+                <div>
+                    Entity Type *:
+                </div>
+                <div>
+                    <input id= "type" type="text" value=""/>
+                </div>
+            </div>
+            
+            <div>
+                <div>
+                    Description:
+                </div>
+                <div>
+                    <textarea id= "description" type="text"></textarea>
+                </div>
+                <div></div>
+            </div>
+            <button id = "dataTrigger"
+                label="Pull Data"
+                onclick="dataTrigger($event)">
+            </button>
+            
+            <button id = "clearData"
+                label="Clear Data"
+                onclick="clearData()"
+                style="margin-left: 5px;">
+            </button>
+        </div>
+</form>
+
 
 <script>
 function pitchMessage() {
