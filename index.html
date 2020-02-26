@@ -33,7 +33,7 @@
                 </div>
                 <div></div>
             </div>
-            <button id = "dataTrigger" label="Pull Data" onclick="dataTrigger($event)">Pull Data</button>
+            <button id = "dataTrigger" label="Pull Data" onclick="pullData()">Pull Data</button>
             
             <button id = "clearData" onclick="clearData()" style="margin-left: 5px;">Clear Data</button>
         </div>
@@ -42,7 +42,29 @@
 
 <script>
 var message= { "pullData": true, "showBanner": true, "bannerMessage": "iframe's Data Request", "bannerDetail": "Pulled data from current entity"}
-function pitchMessage() {
+
+window.addEventListener('load', iframeListener, false);
+
+function iframeListener()
+{
+	window.addEventListener('message', receiveMessage, false);
+}
+
+function receiveMessage(e)
+{
+	if (e.data.type === 'AgencyV2'){
+		console.log('received data= ');
+		console.log(e.data);
+		const agency = <HTMLInputElement>document.getElementById('agency');
+		agency.value = e.data.name;
+		const type = <HTMLInputElement>document.getElementById('type');
+		type.value = e.data.type;
+		document.getElementById('description').innerHTML = e.data.header;
+	}
+}
+
+function pullData() 
+{
   window.parent.parent.postMessage(message, "http://localhost:4200/");
 }
 </script>
