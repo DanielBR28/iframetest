@@ -41,8 +41,9 @@
 
 
 <script>
+var message= { "pullData": true, "showBanner": true, bannerMessage: "Message from iFrame", bannerDetail: 'Pulled data from current entity" }
 function pitchMessage() {
-  window.parent.parent.postMessage("external domain - Hi Parent!", 	"*");
+  window.parent.parent.postMessage(message, "http://localhost:4200/");
 }
 </script>
 </body>
