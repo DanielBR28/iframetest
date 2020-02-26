@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-
-<h2 id="iframeCatcher">iframe Catcher</h2>
-
-<button id="iframePitcher" onclick="pitchMessage()">Pitch to Host</button>
+<h2>Entity Form</h2>
 <form>
         <div style="margin: 10px 0px">
             <div>
@@ -62,6 +59,15 @@ function receiveMessage(e)
 		document.getElementById('description').innerHTML = e.data.header;
 	}
 }
+
+function clearData()
+	{
+		const agency = <HTMLInputElement>document.getElementById('agency');
+		agency.value = '';
+		const type = <HTMLInputElement>document.getElementById('type');
+		type.value = '';
+		document.getElementById('description').innerHTML = '';
+	}
 
 function pullData() 
 {
