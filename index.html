@@ -5,11 +5,12 @@
 			p.groove {border-style: groove;}
 		</style>
 	</head>
-	<body>
-		<div class="border-style: groove">
-			<h2>Iframe's Entity Form
-			</h2>
-			<form>
+	<body style="max-width: fit-content;">
+		<div style="border-style: groove">
+			<div style="margin: calc(2vh);">
+				<h2>Iframe's Entity Form
+				</h2>
+				<form>
 					<div style="margin: 10px 0px">
 						<div>
 							<div>
@@ -41,7 +42,8 @@
 						
 						<button onclick="clearData()" style="margin-left: 5px;">Clear Data</button>
 					</div>
-			</form>
+				</form>
+			</div>
 		</div>
 		<script>
 		var requestMessage= { "pullData": true, "showBanner": true, "bannerMessage": "iframe Pulled Entity Data", "bannerDetail": "iframe pulled data from current entity"};
