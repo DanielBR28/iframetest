@@ -40,33 +40,33 @@
 
 <script>
 var message= { "pullData": true, "showBanner": true, "bannerMessage": "iframe's Data Request", "bannerDetail": "Pulled data from current entity"};
-var agency = document.getElementById('agency');
-var type = document.getElementById('type');
+var agency = document.getElementById("agency");
+var type = document.getElementById("type");
 
-window.addEventListener('load', iframeListener, false);
+function clearData()
+{
+	agency.value = "";
+	type.value = "";
+	document.getElementById("description").innerHTML = "";
+}
+
+window.addEventListener("load", iframeListener, false);
 
 function iframeListener()
 {
-	window.addEventListener('message', receiveMessage, false);
+	window.addEventListener("message", receiveMessage, false);
 }
 
 function receiveMessage(e)
 {
-	if (e.data.type === 'AgencyV2'){
-		console.log('received data= ');
+	if (e.data.type === "AgencyV2"){
+		console.log("iframe's received data= ");
 		console.log(e.data);
 		agency.value = e.data.name;
 		type.value = e.data.type;
-		document.getElementById('description').innerHTML = e.data.header;
+		document.getElementById("description").innerHTML = e.data.header;
 	}
 }
-
-function clearData()
-	{
-		agency.value = '';
-		type.value = '';
-		document.getElementById('description').innerHTML = '';
-	}
 
 function pullData() 
 {
