@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-<h2>Entity Form</h2>
+<h2>Entity Form
+</h2>
 <form>
         <div style="margin: 10px 0px">
             <div>
@@ -52,9 +53,9 @@ function receiveMessage(e)
 	if (e.data.type === 'AgencyV2'){
 		console.log('received data= ');
 		console.log(e.data);
-		const agency = <HTMLInputElement>document.getElementById('agency');
+		var agency = document.getElementById('agency');
 		agency.value = e.data.name;
-		const type = <HTMLInputElement>document.getElementById('type');
+		var type = document.getElementById('type');
 		type.value = e.data.type;
 		document.getElementById('description').innerHTML = e.data.header;
 	}
@@ -62,9 +63,9 @@ function receiveMessage(e)
 
 function clearData()
 	{
-		const agency = <HTMLInputElement>document.getElementById('agency');
+		var agency = document.getElementById('agency');
 		agency.value = '';
-		const type = <HTMLInputElement>document.getElementById('type');
+		var type = document.getElementById('type');
 		type.value = '';
 		document.getElementById('description').innerHTML = '';
 	}
