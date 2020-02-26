@@ -27,9 +27,8 @@
 
 		function receiveMessage(e)
 		{
-			console.log(e.origin)
 			if (e.origin === "http://localhost:4200"){
-				console.log("Message Received from Host= ");
+				console.log("Message Received from Host(" + e.origin + ")= ");
 				console.log(e.data);
 			}
 		}
