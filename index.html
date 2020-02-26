@@ -1,77 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<body>
-<h2>Iframe's Entity Form
-</h2>
-<form>
-        <div style="margin: 10px 0px">
-            <div>
-                <div>
-                    Agency Name *:
-                </div>
-                <div>
-                    <input id="agency" type="text" value=""/>
-                </div>
-            </div>
-            <div>
-                <div>
-                    Entity Type *:
-                </div>
-                <div>
-                    <input id= "type" type="text" value=""/>
-                </div>
-            </div>
-            
-            <div>
-                <div>
-                    Description:
-                </div>
-                <div>
-                    <textarea id= "description" type="text"></textarea>
-                </div>
-                <div></div>
-            </div>
-            <button onclick="pullData()">Pull Data</button>
-            
-            <button onclick="clearData()" style="margin-left: 5px;">Clear Data</button>
-        </div>
-</form>
+	<body>
+		<h2>Iframe's Entity Form
+		</h2>
+		<form>
+				<div style="margin: 10px 0px">
+					<div>
+						<div>
+							Agency Name *:
+						</div>
+						<div>
+							<input id="agency" type="text" value=""/>
+						</div>
+					</div>
+					<div>
+						<div>
+							Entity Type *:
+						</div>
+						<div>
+							<input id= "type" type="text" value=""/>
+						</div>
+					</div>
+					
+					<div>
+						<div>
+							Description:
+						</div>
+						<div>
+							<textarea id= "description" type="text"></textarea>
+						</div>
+						<div></div>
+					</div>
+					<button onclick="pullData()">Pull Data</button>
+					
+					<button onclick="clearData()" style="margin-left: 5px;">Clear Data</button>
+				</div>
+		</form>
 
 
-<script>
-var message= { "pullData": true, "showBanner": true, "bannerMessage": "iframe's Data Request", "bannerDetail": "Pulled data from current entity"};
-var agency = document.getElementById("agency");
-var type = document.getElementById("type");
+		<script>
+		var requestMessage= { "pullData": true, "showBanner": true, "bannerMessage": "iframe Pulled Entity Data", "bannerDetail": "iframe pulled data from current entity"};
+		var clearMessage= { "pullData": false, "showBanner": true, "bannerMessage": "iframe Cleared Entity Data", "bannerDetail": "entity data has been cleared from iframe"};
+		var agency = document.getElementById("agency");
+		var type = document.getElementById("type");
 
-function clearData()
-{
-	agency.value = "";
-	type.value = "";
-	document.getElementById("description").innerHTML = "";
-}
+		function clearData()
+		{
+			agency.value = "";
+			type.value = "";
+			document.getElementById("description").innerHTML = "";
+			window.parent.parent.postMessage(clearMessage, "http://localhost:4200/");
+		}
 
-window.addEventListener("load", iframeListener, false);
+		window.addEventListener("load", iframeListener, false);
 
-function iframeListener()
-{
-	window.addEventListener("message", receiveMessage, false);
-}
+		function iframeListener()
+		{
+			window.addEventListener("message", receiveMessage, false);
+		}
 
-function receiveMessage(e)
-{
-	if (e.data.type === "AgencyV2"){
-		console.log("iframe's received data= ");
-		console.log(e.data);
-		agency.value = e.data.name;
-		type.value = e.data.type;
-		document.getElementById("description").innerHTML = e.data.header;
-	}
-}
+		function receiveMessage(e)
+		{
+			if (e.data.type === "AgencyV2"){
+				console.log("iframe's received data= ");
+				console.log(e.data);
+				agency.value = e.data.name;
+				type.value = e.data.type;
+				document.getElementById("description").innerHTML = e.data.header;
+			}
+		}
 
-function pullData() 
-{
-  window.parent.parent.postMessage(message, "http://localhost:4200/");
-}
-</script>
-</body>
+		function pullData() 
+		{
+		  window.parent.parent.postMessage(requestMessage, "http://localhost:4200/");
+		}
+		</script>
+	</body>
 </html>
