@@ -28,7 +28,7 @@
 		function receiveMessage(e)
 		{
 			if (e.origin === "http://localhost:4200"){
-				console.log("Iframe: message received from external domain(" + e.origin + ")= ");
+				console.log("Iframe: message from external domain(" + e.origin + "): ");
 				console.log(e.data);
 			}
 		}
