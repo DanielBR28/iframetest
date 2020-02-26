@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-<h2>Entity Form
+<h2>Iframe's Entity Form
 </h2>
 <form>
         <div style="margin: 10px 0px">
@@ -31,7 +31,7 @@
                 </div>
                 <div></div>
             </div>
-            <button id = "dataTrigger" label="Pull Data" onclick="pullData()">Pull Data</button>
+            <button id = "dataTrigger" onclick="pullData()">Pull Data</button>
             
             <button id = "clearData" onclick="clearData()" style="margin-left: 5px;">Clear Data</button>
         </div>
@@ -39,7 +39,9 @@
 
 
 <script>
-var message= { "pullData": true, "showBanner": true, "bannerMessage": "iframe's Data Request", "bannerDetail": "Pulled data from current entity"}
+var message= { "pullData": true, "showBanner": true, "bannerMessage": "iframe's Data Request", "bannerDetail": "Pulled data from current entity"};
+var agency = document.getElementById('agency');
+var type = document.getElementById('type');
 
 window.addEventListener('load', iframeListener, false);
 
@@ -53,9 +55,7 @@ function receiveMessage(e)
 	if (e.data.type === 'AgencyV2'){
 		console.log('received data= ');
 		console.log(e.data);
-		var agency = document.getElementById('agency');
 		agency.value = e.data.name;
-		var type = document.getElementById('type');
 		type.value = e.data.type;
 		document.getElementById('description').innerHTML = e.data.header;
 	}
@@ -63,9 +63,7 @@ function receiveMessage(e)
 
 function clearData()
 	{
-		var agency = document.getElementById('agency');
 		agency.value = '';
-		var type = document.getElementById('type');
 		type.value = '';
 		document.getElementById('description').innerHTML = '';
 	}
