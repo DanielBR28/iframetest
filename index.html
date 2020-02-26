@@ -5,44 +5,44 @@
 			p.groove {border-style: groove;}
 		</style>
 	</head>
-	<body class="groove">
-		<h2>Iframe's Entity Form
-		</h2>
-		<form>
-				<div style="margin: 10px 0px">
-					<div>
+	<body >
+		<div class="groove">
+			<h2>Iframe's Entity Form
+			</h2>
+			<form>
+					<div style="margin: 10px 0px">
 						<div>
-							Agency Name *:
+							<div>
+								Agency Name *:
+							</div>
+							<div>
+								<input id="agency" type="text" value=""/>
+							</div>
 						</div>
 						<div>
-							<input id="agency" type="text" value=""/>
+							<div>
+								Entity Type *:
+							</div>
+							<div>
+								<input id= "type" type="text" value=""/>
+							</div>
 						</div>
+						
+						<div>
+							<div>
+								Description:
+							</div>
+							<div>
+								<textarea id= "description" type="text"></textarea>
+							</div>
+							<div></div>
+						</div>
+						<button onclick="pullData()">Pull Data</button>
+						
+						<button onclick="clearData()" style="margin-left: 5px;">Clear Data</button>
 					</div>
-					<div>
-						<div>
-							Entity Type *:
-						</div>
-						<div>
-							<input id= "type" type="text" value=""/>
-						</div>
-					</div>
-					
-					<div>
-						<div>
-							Description:
-						</div>
-						<div>
-							<textarea id= "description" type="text"></textarea>
-						</div>
-						<div></div>
-					</div>
-					<button onclick="pullData()">Pull Data</button>
-					
-					<button onclick="clearData()" style="margin-left: 5px;">Clear Data</button>
-				</div>
-		</form>
-
-
+			</form>
+		</div>
 		<script>
 		var requestMessage= { "pullData": true, "showBanner": true, "bannerMessage": "iframe Pulled Entity Data", "bannerDetail": "iframe pulled data from current entity"};
 		var clearMessage= { "pullData": false, "showBanner": true, "bannerMessage": "iframe Cleared Entity Data", "bannerDetail": "entity data has been cleared from iframe"};
