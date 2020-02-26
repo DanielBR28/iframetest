@@ -27,7 +27,8 @@
 
 		function receiveMessage(e)
 		{
-			if (e.origin === "http://localhost:4200/"){
+			console.log(e.origin)
+			if (e.origin === "http://localhost:4200"){
 				console.log("Message Received from Host= ");
 				console.log(e.data);
 			}
@@ -35,7 +36,7 @@
 
 		function pullData() 
 		{
-		  window.parent.postMessage(requestMessage, "http://localhost:4200/");
+		  window.parent.postMessage(requestMessage, "http://localhost:4200");
 		}
 		</script>
 	</body>
