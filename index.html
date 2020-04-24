@@ -15,14 +15,12 @@
 
 		function receiveMessage(e)
 		{
-			if (e.origin === "http://ws-eus-arc-client.azurewebsites.net/"){
-				alert("Iframe: message from external domain: " + JSON.stringify(e.data));
-			}
+			alert("Iframe: message from external domain: " + JSON.stringify(e.data));
 		}
 
 		function pullData() 
 		{
-		  window.parent.postMessage(requestMessage, "http://ws-eus-arc-client.azurewebsites.net/");
+		  window.parent.postMessage(requestMessage, "*");
 		}
 		</script>
 	</body>
