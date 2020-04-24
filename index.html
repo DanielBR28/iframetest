@@ -16,8 +16,7 @@
 		function receiveMessage(e)
 		{
 			if (e.origin === "http://localhost:4200"){
-				alert("Iframe: message from external domain(" + e.origin + "): ");
-				alert(e.data);
+				alert("Iframe: message from external domain: " + JSON.stringify(e.data));
 			}
 		}
 
